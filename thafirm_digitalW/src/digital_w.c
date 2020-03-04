@@ -4,15 +4,12 @@
  * Created: 2/7/2020 1:22:20 PM
  *  Author: Diogo Rodrigues Roessler
  * ======================================= */
-
 #include <stdlib.h>
-
 #include "digital_w.h"
 
-UINT 
-__UNIVERSAL_PROCEDURE__
-_digital_w (IN UINT pin,
-			IN UINT mode)
+/* Rotina Re-escrita do Core do Arduino Board 
+   Equivale ao digitalWrite() */
+UINT __UNIVERSAL_PROCEDURE__ _digital_w (IN UINT pin, IN UINT mode)
 /*
 --------------------------------------------------------------------------------
 \COMMENT: Perguntas e Respostas.
@@ -50,12 +47,12 @@ _digital_w (IN UINT pin,
 	} else {
 		RETURN FALSE;
 	}
-	RETURN FALSE;
+
+	return FALSE;
 }
 
-BOOLEAN
-__WINDOWS_ATMEL_IDE
-delay_ms (IN ULONG _ms)
+/* Delay para operar sobre a plataforma Microsoft Windows Em Atmel Studio 8 */
+BOOLEAN __WINDOWS_ATMEL_IDE delay_ms (IN ULONG _ms)
 /*
 --------------------------------------------------------------------------------
 \COMMENT: Perguntas e Respostas.
@@ -73,8 +70,7 @@ delay_ms (IN ULONG _ms)
 	   		+ que queremos Um segundo e nada mais.
 --------------------------------------------------------------------------------
 */
-{
-	/* Code for Microsoft Windows IDE Atmel Studio 8 */
+{	/* Code for Microsoft Windows IDE Atmel Studio 8 */
 
 	PDELAY _delay = malloc(sizeof(PDELAY));
 	UINT i,j;
@@ -90,19 +86,18 @@ delay_ms (IN ULONG _ms)
 	RETURN FALSE;
 }
 
-BOOLEAN 
-__UNIVERSAL_PROCEDURE__
-delay_ms_linux_(unsigned long _ms)
+/* Delay para operar em linux, ou pela IDE Visual Studio Code */
+BOOLEAN __UNIVERSAL_PROCEDURE__ delay_ms_linux_(unsigned long _ms)
 /* 
 --------------------------------------------------------------------------------
 \COMMENT: Perguntas e Respostas.
 \RETURN: Funcionamento do sistema 
 --------------------------------------------------------------------------------
-	+ \COMMENT:
+	\COMMENT:
 		+ Codigo universal para delay em milisegundos.
 		+ Serve tanto para Linux e IDEs como para Windows e IDEs.
 --------------------------------------------------------------------------------
-	+ \RETURN:
+	\RETURN:
 		+  Testado em Linux, Microsoft Visual Studio Code com o PIO (PlatformIO)
 --------------------------------------------------------------------------------
 */
@@ -120,5 +115,96 @@ delay_ms_linux_(unsigned long _ms)
 		}
 
 	free(_delay);
+	
 	return TRUE;
+}
+
+// Universal rotina para imprimir os dados escritos em formato ANSICII
+BOOLEAN __UNIVERSAL_PROCEDURE__ Printf_s ( IN WCHAR _menssage )
+/* 
+--------------------------------------------------------------------------------
+\COMMENT: Perguntas e Respostas.
+\RETURN: Funcionamento do sistema 
+--------------------------------------------------------------------------------
+	\COMMENT:
+		+ Codigo universal para imprimir uma menssagem.
+		+ Serve tanto para Linux e IDEs como para Windows e IDEs.
+--------------------------------------------------------------------------------
+	\RETURN:
+		+  Testado em Linux, Microsoft Visual Studio Code com o PIO (PlatformIO)
+--------------------------------------------------------------------------------
+*/
+{
+	return FALSE;
+}
+
+// Universal rotina para obter em numeros o tamanho de uma string
+INT __UNIVERSAL_PROCEDURE__ Strlen_s ( IN SIZE _len )
+/* 
+--------------------------------------------------------------------------------
+\COMMENT: Perguntas e Respostas.
+\RETURN: Funcionamento do sistema 
+--------------------------------------------------------------------------------
+	\COMMENT:
+		+ Codigo universal para obter o tamanho de uma WCHAR string.
+		+ Serve tanto para Linux e IDEs como para Windows e IDEs.
+--------------------------------------------------------------------------------
+	\RETURN:
+		+  Testado em Linux, Microsoft Visual Studio Code com o PIO (PlatformIO)
+--------------------------------------------------------------------------------
+*/
+{
+	return 0;
+}
+
+/* Array variaveis maneiras de fazer isto de várias maneiras */
+static unsigned int ObtemValue[IS_LINUX_FOR_ARDUINO_UNO] = {
+	[0 ... IS_LINUX_FOR_ARDUINO_UNO -1] = !IS_WINDOWS_FOR_ARDUINO_UNO
+};
+
+/* Imiita as funcionalidades real do kernel, mais para que serve ? */
+static const struct _STRING_FORMAT StringFormat = {
+	.string 	= "DIOGO",
+	.string_len = 5
+};
+
+/* Imiita as funcionalidades real do kernel, mais para que serve ? */
+VOID __UNIVERSAL_PROCEDURE__ ImitaKernel()
+/* 
+--------------------------------------------------------------------------------
+\COMMENT: Perguntas e Respostas.
+\RETURN: Funcionamento do sistema 
+--------------------------------------------------------------------------------
+	\COMMENT
+		Tenta mesclar está função em um arquivo C++ para a obtenção de uma
+			string
+	\RETURN
+		Está função serve somente em C++, sem exeção.
+		Pelo fato de que printf do C não funciona e não tem Serial Port em C.
+--------------------------------------------------------------------------------
+*/
+{
+
+}
+
+/* Imiita as funcionalidades real do kernel para LED, mais para que serve ? */
+static const struct _HAVE_FUN_LED HaveFunWithLed = {
+	.HardwareFlags = 0xFF
+};
+
+/* Imiita as funcionalidades real do kernel para LED, mais para que serve ? */
+VOID __UNIVERSAL_PROCEDURE__ ImitaKernelForLed()
+/*
+--------------------------------------------------------------------------------
+\COMMENT: Perguntas e Respostas.
+\RETURN: Funcionamento do sistema 
+--------------------------------------------------------------------------------
+	\COMMENT
+		Tenta mesclar do kernel com o Led.
+	\RETURN
+		Função do Led.
+--------------------------------------------------------------------------------
+*/
+{
+
 }
